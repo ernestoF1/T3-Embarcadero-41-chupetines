@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+ 
+ <link rel="stylesheet" type="text/css" href="static/css/nuevaventa.css" th:href="@{/css/nuevaventa.css}">
+<head th:replace="layout/layout :: head">
+
+</head>
+<body>
+	<div class="container ">
+		<h1>Registro de nuevo Pedido</h1>
+
+		<div class="card col-lg-7">
+		
+			<div class="card-header ">Registro de nuevo pedido</div>
+			
+			<div class="card-body color-cabecera">
+
+				<form th:action="@{/cliente/savepedido}" th:object="${pedido}"
+					method="post">
+
+
+					<div class="col-13 carrito-img">
+                      <img src="static/img/buylogo.png" th:src="@{/img/buylogo.png}"/>
+                    </div>
+					
+					
+					<div class="form-group">
+						<label for="nombre_pedido">Nombre Pedido</label> <input
+							type="text" class="control-label col-md-3"
+							placeholder=nombre_pedido th:field="*{nombre_pedido}" />
+
+					</div>
+					
+					
+					<div class="form-row">
+					<div class="form-group col-md-4">
+						<label for="plato">Plato Nombre:</label> 
+						<select th:field="*{plato}" class="form-control">
+						<!-- option th:each="nombre de la tabla de la clase"  -->
+					      <option th:each="platos : ${platos}"
+					      	th:value="${platos.id}" th:text="${platos.nombre}" ></option>
+					      	
+					    </select>
+					    
+					
+					</div>
+					</div>
+					
+					
+
+					<button type="submit" class="btn btn-primary">
+						<i class="fas fa-save"></i> Guardar
+					</button>
+					<a th:href="@{/}" class="btn btn-danger"> <i
+						class="fas fa-undo"></i> Cancelar
+					</a>
+				</form>
+
+			</div>
+		</div>
+
+	</div>
+
+</body>
+</html>
