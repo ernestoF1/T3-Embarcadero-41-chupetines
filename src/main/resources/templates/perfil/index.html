@@ -14,7 +14,7 @@
 				<p class="card-text">Authorities: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span> </p>
 				
 				<p class="card-text">Username from Authentication Class: <span th:text="${currentPrincipalName}"></span> </p>
-				<p class="card-text">Nombres: <span th:text="${#authentication.getPrincipal().getNombre()}"></span> </p>
+				<p class="card-text">Nombres: <span th:text="${#authentication.getPrincipal().getNombres()}"></span> </p>
 				<!--  <p class="card-text">TipoUsuario: <span th:text="${#authentication.getPrincipal().getTipoUsuario()}"></span> </p>--> 
 				
 				

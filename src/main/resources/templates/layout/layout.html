@@ -31,7 +31,7 @@
 				<ul class="navbar-nav mr-auto">
 					
 					<li class="nav-item active"><a class="nav-link"
-						th:href="@{#}"> Platos de comida <span class="sr-only">(current)</span>
+						th:href="@{/plato}"> Platos de comida <span class="sr-only">(current)</span>
 					</a></li>
 
 
@@ -39,27 +39,46 @@
 
 					<!-- si  estas autenticado desaparece esta opción -->
 					<li sec:authorize="isAnonymous()" class="nav-item"><a
-						class="nav-link" th:href="@{/cliente/nuevo}"> <i
-							class="fas fa-user-circle"></i> Registrarse Cliente
+						class="nav-link" th:href="@{/usuario/nuevoclienteInvitado}"> <i
+							class="fas fa-user-circle"></i> Registrarse Cliente invitado
 					</a></li>
 					<li sec:authorize="isAnonymous()" class="nav-item"><a
-						class="nav-link" th:href="@{/personal/nuevo}"> <i
-							class="fas fa-user-circle"></i> Registrarse Personal
+						class="nav-link" th:href="@{/usuario/nuevoclienteIdentificado}"> <i
+							class="fas fa-user-circle"></i> Registro Cliente Identificado
 					</a></li>
 					
-					<li sec:authorize="isAuthenticated()" class="nav-item active"><a
+					<li sec:authorize="isAnonymous()"  class="nav-item"><a
+						class="nav-link" th:href="@{/usuario/nuevocamarero}"> <i
+							class="fas fa-user-circle"></i> Registrar Camarero
+					</a></li>
+					<li sec:authorize="isAnonymous()"  class="nav-item"><a
+						class="nav-link" th:href="@{/usuario/nuevogerente}"> <i
+							class="fas fa-user-circle"></i> Registrar gerente
+					</a></li>
+					
+					
+					<li sec:authorize="hasRole('ROLE_IDENTIFICADO')" class="nav-item active"><a
 						class="nav-link"
-						th:href="@{ '/cliente/info/' + ${#authentication.getPrincipal().getId()} }">
+						th:href="@{ '/usuario/pedido/' + ${#authentication.getPrincipal().getId()} }">
 							<i class="fas fa-shopping-cart"></i> Pedido
 					</a></li>
+					<li sec:authorize="hasRole('ROLE_IDENTIFICADO')" class="nav-item active"><a
+						class="nav-link"
+						th:href="@{ '/usuario/detalleMostrarPedido/' + ${#authentication.getPrincipal().getId()} }">
+							<i class="fas fa-clipboard-list"></i> Mis Pedidos
+					</a></li>
+					
 
 					<!-- si  estas autenticado desaparece esta opción -->
 					<li sec:authorize="isAnonymous()" class="nav-item"><a
 						class="nav-link" th:href="@{/login}"> <i
 							class="fas fa-user-circle"></i> Sign in
 					</a></li>
-					<li sec:authorize="hasRole('ROLE_ADMIN')"  class="nav-item active"><a class="nav-link"
-						th:href="@{/personal}"> Lista de usuarios <span class="sr-only">(current)</span>
+					<li sec:authorize="hasRole('ROLE_GERENTE')"  class="nav-item active"><a class="nav-link"
+						th:href="@{/usuario}"> Lista de usuarios <span class="sr-only">(current)</span>
+					</a></li>
+					<li sec:authorize="hasRole('ROLE_CAMARERO')"  class="nav-item active"><a class="nav-link"
+						th:href="@{/usuario/listacliente}"> Lista de clientes <span class="sr-only">(current)</span>
 					</a></li>
 					
 
@@ -71,7 +90,7 @@
 						class=" dropdown-toggle btn btn-outline-info my-2 my-sm-0 btn-sm"
 						data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
 						aria-expanded="false"> <i class="fas fa-user"></i> <strong><span
-								th:text="${#authentication.getPrincipal().getNombre()}">Juancito</span></strong>
+								th:text="${#authentication.getPrincipal().getNombres()}">Juancito</span></strong>
 							(<span sec:authentication="name">Username</span>)
 					</a>
 						<div class="dropdown-menu">

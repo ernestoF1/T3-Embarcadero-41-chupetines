@@ -16,6 +16,7 @@ import javax.persistence.Table;
 
 
 
+
 @Entity
 @Table(name="pedidos")
 public class Pedido {
@@ -32,11 +33,10 @@ public class Pedido {
 	private Plato plato;
 	
 	
+	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="cliente_id")
-	private Cliente cliente;
-	
-	
+	@JoinColumn(name="usuario_id")
+	private Usuario usuario;
 	
 	public Integer getCodigo() {
 		return codigo;
@@ -55,20 +55,21 @@ public class Pedido {
 	}
 
 	
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
+	
 	public Plato getPlato() {
 		return plato;
 	}
 
 	public void setPlato(Plato plato) {
 		this.plato = plato;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	

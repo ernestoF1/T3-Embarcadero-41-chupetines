@@ -1,5 +1,8 @@
 package pe.edu.upn.embarcadero41.config.security;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,11 +23,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private PersonalDetailsService personalDetailsService;
-	@Autowired
-	private ClienteDetailsService clienteDetailsService;
 	
+	@Autowired
+	private UsuarioDetailsService usuarioDetailsService;
 	@Autowired
     private LoggingAccessDeniedHandler accessDeniedHandler;
 	
@@ -39,33 +40,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 				.antMatchers("/index.html").permitAll()
 				
-				.antMatchers("/categoria/nuevo").hasRole("ADMIN")
-				.antMatchers("/categoria/del/**").hasRole("ADMIN")
-				.antMatchers("/categoria/edit/**").hasRole("ADMIN")
-				.antMatchers("/categoria/**/nuevomodelo").hasRole("ADMIN")
-				
-				.antMatchers("/modelo/nuevo").hasRole("ADMIN")
-				.antMatchers("/modelo/del/**").hasRole("ADMIN")
-				.antMatchers("/modelo/edit/**").hasRole("ADMIN")
-				.antMatchers("/modelo/**/nuevoproducto").hasRole("ADMIN")
-				
-				.antMatchers("/producto/nuevo").hasRole("ADMIN")
-				.antMatchers("/producto/del/**").hasRole("ADMIN")
-				.antMatchers("/producto/edit/**").hasRole("ADMIN")
-				
-				.antMatchers("/usuario/del/**").hasRole("ADMIN")
-				/*
-				.antMatchers("/medico").authenticated()
-				*/
 				
 				
-				/*.antMatchers("/categoria/**").authenticated()   .hasRole("ADMIN")*/
+				.antMatchers("/usuario/pedido/**").hasRole("IDENTIFICADO")
+				.antMatchers("/usuario/**/nuevopedido").hasRole("IDENTIFICADO")
+				.antMatchers("/pedido/del/**").hasRole("IDENTIFICADO")
+				.antMatchers("/pedido/edit/**").hasRole("IDENTIFICADO")
 				
-				/* la opcion nuevo tienes que ser admin para entrar por url */
-				/*
+				.antMatchers("/usuario/informacion/**").hasRole("CAMARERO")
 				
-				.antMatchers("/medico/del/**").hasRole("ADMIN")
-				*/
+				
+				.antMatchers("/usuario/del").hasRole("GERENTE")
+				.antMatchers("/plato/nuevo").hasRole("GERENTE")
+				.antMatchers("/plato/del/**").hasRole("GERENTE")
+				.antMatchers("/plato/edit/**").hasRole("GERENTE")
+				
+				.antMatchers("/usuario/del/**").hasRole("GERENTE")
+				
+				
+				
 			.and()
 			.formLogin()
 				.loginProcessingUrl("/signin")
@@ -81,8 +74,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             	.tokenValiditySeconds(2592000)
             	.key("Cl4v3.")
             	.rememberMeParameter("checkRememberMe")
-            	.userDetailsService(personalDetailsService)
-            	.userDetailsService(clienteDetailsService)
+            	.userDetailsService(usuarioDetailsService)
             .and()
                 .exceptionHandling()
                     .accessDeniedHandler(accessDeniedHandler);
@@ -96,11 +88,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Bean
     DaoAuthenticationProvider authenticationProvider(){
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        daoAuthenticationProvider.setUserDetailsService(this.personalDetailsService);
-        daoAuthenticationProvider.setUserDetailsService(clienteDetailsService);
-
+        daoAuthenticationProvider.setUserDetailsService(this.usuarioDetailsService);
+        
+       
         return daoAuthenticationProvider;
     }
 	

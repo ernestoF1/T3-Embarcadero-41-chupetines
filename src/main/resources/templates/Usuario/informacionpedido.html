@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<div class="col-12">
+        <h2>Pedidos</h2>
+	
+	 <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col">Codigo Pedido</th>
+				<th scope="col">Nombre Pedido</th>
+				<th scope="col">Tipo usuario</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="detallepedido: ${usuario.listaDetallePedido}">
+                    <th scope="row" th:text="${detallepedido.id}">1</th>
+				<td scope="row" th:text="${detallepedido.nombre}">Mark</td>
+				<td scope="row" th:text="${detallepedido.usuario.tipousuario.nombre}">Mark</td>
+                    
+                </tr>
+                </tbody>
+            </table>
+            <a th:href="@{/}" class="btn btn-danger"> <i
+						class="fas fa-undo"></i> Regresar
+					</a>
+        </div>
+        </div>
+</body>
+</html>

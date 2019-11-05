@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,30 +13,25 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+
 @Entity
-@Table(name = "platos")
-public class Plato {
+@Table(name="detallepedidos")
+public class DetallePedido {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "nomPlato", length = 60)
-	private String nombre; 
-	
-	@Column(name = "precio", length = 60)
-	private float precio;
-	
-	@OneToMany(mappedBy="plato")
-	private List<Pedido>listapedido2;
-	
-	public Plato() {
-		listapedido2=new ArrayList<>();
-	}
 
-	 public void addPedido2(Pedido pedido) {
-		   pedido.setPlato(this);
-		   this.listapedido2.add(pedido);
-		}
+	@Column(name="nombre")
+	private String nombre;
+	
+	
+	@ManyToOne
+    @JoinColumn
+    private Usuario usuario;
+
+	
 
 	public Integer getId() {
 		return id;
@@ -58,24 +52,18 @@ public class Plato {
 		this.nombre = nombre;
 	}
 
+
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	 
 	
+	 
 	
-	public float getPrecio() {
-		return precio;
-	}
-
-	public void setPrecio(float precio) {
-		this.precio = precio;
-	}
-
-	public List<Pedido> getListapedido2() {
-		return listapedido2;
-	}
-
-	public void setListapedido2(List<Pedido> listapedido2) {
-		this.listapedido2 = listapedido2;
-	}
-
- 
-
 }

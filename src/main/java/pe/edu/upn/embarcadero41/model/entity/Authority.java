@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 
+
 @Entity
 @Table(name = "authorities", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "authority"})})
 public class Authority {
@@ -23,14 +24,12 @@ public class Authority {
     @Column(length = 30, nullable = false)
     private String authority;
     
+   
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")    
-    private Personal personal;
+    private Usuario usuario;
     
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cliente_id")    
-    private Cliente cliente;
-
 	public long getId() {
 		return id;
 	}
@@ -47,21 +46,16 @@ public class Authority {
 		this.authority = authority;
 	}
 
-	public Personal getPersonal() {
-		return personal;
+
+
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setPersonal(Personal personal) {
-		this.personal = personal;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
+	
 	
 }
